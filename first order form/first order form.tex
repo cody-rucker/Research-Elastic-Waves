@@ -1,0 +1,222 @@
+\documentclass[12pt]{article}
+
+\usepackage{graphicx}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{color}
+\usepackage{changepage}
+\usepackage[margin=1.2in]{geometry}
+\newcommand{\Tau}{\mathrm{T}}
+\usepackage{enumitem}
+\usepackage{subfig}
+\usepackage{enumitem}
+\usepackage{sectsty}
+\usepackage{upgreek}
+\usepackage{setspace}
+\usepackage{cite}
+\usepackage[final]{pdfpages}
+\usepackage{float}
+\usepackage{siunitx}
+\usepackage{wrapfig}
+\usepackage{tikz}
+\usetikzlibrary{decorations.pathreplacing}
+\usetikzlibrary{arrows,angles,quotes}
+\usepackage{systeme}
+
+\sectionfont{\fontsize{15}{18}\selectfont}
+\subsectionfont{\fontsize{12}{15}\selectfont}
+
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+
+
+\begin{document}
+\begin{flushleft}
+
+Starting with the elastic wave equation in first order form on the domain $[0,1]$
+\begin{align*}
+\rho v_t &= \sigma_x\\
+\sigma_t &= \mu v_x \\
+\end{align*}
+
+we write 
+\begin{align*}
+\begin{bmatrix}
+v \\
+\sigma \\
+\end{bmatrix}_t &= \begin{bmatrix}
+0 & \frac{1}{\rho} \\
+\mu & 0 \\
+\end{bmatrix} \begin{bmatrix}
+v \\
+\sigma \\
+\end{bmatrix}_x.
+\end{align*}
+
+This may be diagonalized as 
+\begin{align*}
+\begin{bmatrix}
+v \\
+\sigma \\
+\end{bmatrix}_t &= \mathbf{P} \boldsymbol{\Lambda} \mathbf{P}^{-1} \begin{bmatrix}
+v \\
+\sigma \\
+\end{bmatrix}_x.
+\end{align*}
+where $\mathbf{P} = \begin{bmatrix}
+k & k \\
+1 & -1\\
+\end{bmatrix}$, $\mathbf{P}^{-1} =\frac{1}{2k} \begin{bmatrix}
+1 & k \\
+1 & -k\\
+\end{bmatrix}$, $\boldsymbol{\Lambda} = \begin{bmatrix}
+c_s & 0 \\
+0 & -c_s \\
+\end{bmatrix}$, for $c_s = \sqrt{\frac{\mu}{\rho}}$ the shear wave speed and $k = (\sqrt{\mu \rho } )^{-1}$. By defining the transformation 
+\begin{align*}
+\mathbf{z} = \begin{bmatrix}
+z_1 \\
+z_2\\
+\end{bmatrix} = \mathbf{P}^{-1} \begin{bmatrix}
+v \\
+\sigma \\
+\end{bmatrix}
+\end{align*}
+and multiplying by $\mathbf{P}^{-1}$ on the left we get the decoupled system 
+\begin{align*}
+\mathbf{z}_t = \boldsymbol{\Lambda} \mathbf{z}_x.
+\end{align*}
+
+This decoupled system 
+\begin{align*}
+(z_1)_t - c_s (z_1)_x = 0 \\
+(z_2)_t + c_s (z_2)_x = 0\\
+\end{align*}
+tells us that a solution $z_1$ will be a left traveling wave and $z_2$ will be a right-traveling wave. So we must specify a boundary condition for $z_1$ at $x=1$ and a boundary condition for $z_2$ at $x=0$:
+
+\begin{align*}
+z_1(1, t) &= g_1 \quad t>0 \\
+z_2(0,t) &= g_2  \quad t>0.\\
+\end{align*}
+
+\subsection*{Semidiscrete problem}
+
+\begin{align*}
+\mathbf{z}_t = (\boldsymbol{\Lambda} \otimes \boldsymbol{D}) \mathbf{z} + \boldsymbol{\Sigma} \mathbf{z} 
+\end{align*}
+where $\boldsymbol{\Lambda}$ $2 \times 2$ diagonal matrix of eigenvalues, $\boldsymbol{D}$ is a $N\times N$ SBP finite difference approximation to the first derivative. $z$ is a $2N\times 1$ vector consisting of $z_1$ stacked on top of $z_2$, that is
+$$\mathbf{z} = \begin{bmatrix}
+z_{11}\\
+z_{12}\\
+\vdots \\
+z_{1N}\\
+z_{21}\\
+z_{22}\\
+\vdots \\
+z_{2N}\\
+\end{bmatrix}.$$
+
+Finally, take $\boldsymbol{H}$ to be the quadrature matrix associated with $\mathbf{D}$ and $\mathcal{H} = I_2 \otimes \boldsymbol{H}$. We proceed by multiplying $\mathbf{z}_t$ by $\mathbf{z}^{T}\mathcal{H}$ and adding the transpose:
+
+\begin{align*}
+\mathbf{z}^{T} \mathcal{H} \mathbf{z}_t + (\mathbf{z}^{T}\mathcal{H} \mathbf{z}_t)^{T} &= \mathbf{z}^{T}\mathcal{H} (\boldsymbol{\Lambda} \otimes \boldsymbol{D} ) \mathbf{z} + \mathbf{z}^{T} \mathcal{H} \boldsymbol{\Sigma} \boldsymbol{z} 
++ \mathbf{z}^{T} (\boldsymbol{\Lambda} \otimes \boldsymbol{D} )^{T}\mathcal{H} \mathbf{z} + \mathbf{z}^{T} \boldsymbol{\Sigma}^{T}\mathcal{H} \boldsymbol{z}\\
+&=\mathbf{z}^{T} \big [( \boldsymbol{\Lambda} \otimes \boldsymbol{H D}) + (\boldsymbol{\Lambda} \otimes (\boldsymbol{HD})^{T}) \big ] \mathbf{z} + \mathbf{z}^{T} \big [ \mathcal{H}\boldsymbol{\Sigma} +(\mathcal{H}\boldsymbol{\Sigma})^{T} \big ] \mathbf{z}\\
+&= \mathbf{z}^{T} \big [ \boldsymbol{\Lambda} \otimes (\boldsymbol{Q} +\boldsymbol{Q}^{T}) \big ] \mathbf{z} + \mathbf{z}^{T} \big [ \mathcal{H}\boldsymbol{\Sigma} +(\mathcal{H}\boldsymbol{\Sigma})^{T} \big ] \mathbf{z}\\
+&= \mathbf{z}^{T} \big [ \boldsymbol{\Lambda} \otimes (\boldsymbol{E}_N - \boldsymbol{E}_0) \big ] \mathbf{z} + \mathbf{z}^{T} \big [ \mathcal{H}\boldsymbol{\Sigma} +(\mathcal{H}\boldsymbol{\Sigma})^{T} \big ] \mathbf{z} \\
+&= \lambda_1( z_{1N}^2 - z_{11}^2) + \lambda_2(z_{2N}^2 - z_{21}^2) + \mathbf{z}^{T} \big [ \mathcal{H}\boldsymbol{\Sigma} +(\mathcal{H}\boldsymbol{\Sigma})^{T} \big ] \mathbf{z}.
+\end{align*}
+
+Though I neglected to mention it earlier, the penalty matrix $\boldsymbol{\Sigma}$ is given by 
+$$\boldsymbol{\Sigma} = \begin{bmatrix}
+\alpha_1 \boldsymbol{H}^{-1} \boldsymbol{E}_N & -\alpha_1 \boldsymbol{H}^{-1} R_N \boldsymbol{E}_N \\
+-\alpha_2 \boldsymbol{H}^{-1} R_0 \boldsymbol{E}_0 & \alpha_2\boldsymbol{H}^{-1} \boldsymbol{E}_0
+\end{bmatrix}$$
+
+and we compute
+
+\begin{align*}
+\mathcal{H}\boldsymbol{\Sigma} &=
+(I_2 \otimes \boldsymbol{H}) \begin{bmatrix}
+\alpha_1 \boldsymbol{H}^{-1} \boldsymbol{E}_N & -\alpha_1 \boldsymbol{H}^{-1} R_N \boldsymbol{E}_N \\
+-\alpha_2 \boldsymbol{H}^{-1} R_0 \boldsymbol{E}_0 & \alpha_2\boldsymbol{H}^{-1} \boldsymbol{E}_0
+\end{bmatrix}\\
+ &= \begin{bmatrix}
+\alpha_1 \boldsymbol{E}_N & -\alpha_1 R_N \boldsymbol{E}_N \\
+-\alpha_2 R_0 \boldsymbol{E}_0 & \alpha_2 \boldsymbol{E}_0
+\end{bmatrix}.
+\end{align*}
+ Finally we have
+\begin{align*}
+\mathbf{z}^{T} \mathcal{H} \mathbf{z}_t + (\mathbf{z}^{T}\mathcal{H} \mathbf{z}_t)^{T} &=  \lambda_1 z_{1N}^2 - \lambda_1 z_{11}^2 + \lambda_2 z_{2N}^2 - \lambda_2 z_{21}^2 
++ 2\alpha_1 z_{1N}^2 + 2 \alpha_2 z_{21}^2\\
+& \quad - 2\alpha_2 R_0 z_{11}z_{21} - 2\alpha_1 R_N z_{1N}z_{2N}.
+\end{align*}
+
+To deal with the final two terms in the previous equation, we can use the fact that for $a,b \in \mathbb{R}$ 
+$$2ab \leq a^2 + b^2,$$
+and in our case 
+\begin{align*}
+2 ( R_0 z_{11})(z_{21}) &\leq  R_0^2 z_{11}^2 +  z_{21}^2\\
+2 ( R_N z_{2N})(z_{1N}) &\leq  R_N^2 z_{2N}^2 + z_{1N}^2.
+\end{align*}
+
+Now we employ the fact that $\alpha_1, \alpha_2 < 0$ and thus $-\alpha_1 > 0$ and $-\alpha_2 >0$. Note that because we also have that $-2ab \leq a^2 +b^2$ then if $\alpha_1$ or $\alpha_2$ turned out to be  a positive number we can still use this approach by replacing $2$ with $-2$ in the above inequalities. Multiplying by $-\alpha_1, -\alpha_2$
+
+\begin{align*}
+2(-\alpha_2) ( R_0 z_{11})(z_{21}) &\leq  -\alpha_2 R_0^2 z_{11}^2 -  \alpha_2 z_{21}^2\\
+2(-\alpha_1) ( R_N z_{2N})(z_{1N}) &\leq  -\alpha_1 R_N^2 z_{2N}^2 -\alpha_1  z_{1N}^2.
+\end{align*} 
+
+Returning to $\mathbf{z}^{T} \mathcal{H} \mathbf{z}_t + (\mathbf{z}^{T}\mathcal{H} \mathbf{z}_t)^{T}$ we can now write
+
+\begin{align*}
+\mathbf{z}^{T} \mathcal{H} \mathbf{z}_t + (\mathbf{z}^{T}\mathcal{H} \mathbf{z}_t)^{T} &=  \lambda_1 z_{1N}^2 - \lambda_1 z_{11}^2 + \lambda_2 z_{2N}^2 - \lambda_2 z_{21}^2 
++ 2\alpha_1 z_{1N}^2 + 2 \alpha_2 z_{21}^2\\
+& \quad - 2\alpha_2 R_0 z_{11}z_{21} - 2\alpha_1 R_N z_{1N}z_{2N}\\
+\vspace{0.25cm}\\
+&\leq \lambda_1 z_{1N}^2 - \lambda_1 z_{11}^2 + \lambda_2 z_{2N}^2 - \lambda_2 z_{21}^2 
++ 2\alpha_1 z_{1N}^2 + 2 \alpha_2 z_{21}^2\\
+& \quad -\alpha_2 R_0^2 z_{11}^2 -  \alpha_2 z_{21}^2 -\alpha_1 R_N^2 z_{2N}^2 -\alpha_1  z_{1N}^2\\
+\vspace{0.25cm}\\
+&= z_{1N}^2 ( \lambda_1 + 2\alpha_1 - \alpha_1) + z_{21}^2(2\alpha_2 -\lambda_2 -\alpha_2)\\
+& \quad +z_{11}^2(-\alpha_2 R_0^2 - \lambda_1) + z_{2N}^2(-\alpha_1 R_N^2 + \lambda_2)\\
+\vspace{0.25cm}\\
+&= z_{1N}^2 ( \lambda_1 + \alpha_1) + z_{21}^2(\alpha_2 -\lambda_2 )\\
+& \quad +z_{11}^2(-\alpha_2 R_0^2 - \lambda_1) + z_{2N}^2(-\alpha_1 R_N^2 + \lambda_2).
+\end{align*}
+
+From the first two terms we can gather that $\alpha_1 \leq -\lambda_1$ and $\alpha_2 \leq \lambda_2 = -\lambda_1$. Moreover, if we choose $\alpha_1 = \alpha_2 = -\lambda_1$ we have
+
+\begin{align*}
+\mathbf{z}^{T} \mathcal{H} \mathbf{z}_t + (\mathbf{z}^{T}\mathcal{H} \mathbf{z}_t)^{T} &\leq z_{11}^2 ( \lambda_1 R_0^2 - \lambda_1) + z_{2N}^2(\lambda_1 R_N^2 - \lambda_1)\\
+&= \lambda_1 \big [ z_{11}^2(R_0^2 - 1) + z_{2N}^2( R_N^2 - 1) \big ]
+\end{align*}
+
+\section*{Energy Method for the Continuous Problem}
+Consider the continuous form of the diagonalized system we derived from the first-order wave equation 
+
+\begin{align*}
+\eta_t &= C_s \eta_x  \\
+\xi_t &= -C_s \xi_x\\
+\vspace{0.25cm}\\
+\eta(1) &= R_N \xi(1) \quad &|R_N| \leq 1 \\
+\xi(0) &= R_0 \eta(0) \quad &|R_0| \leq 1 \\
+\end{align*}
+
+Now let $\mathbf{z} = \begin{bmatrix}
+\eta\\
+\xi
+\end{bmatrix}$ and integrate $\mathbf{z}^T \mathbf{z}_t$ over the domain $[0,1]$. This yields
+
+\begin{alignat*}{2}
+\int_0^1 \mathbf{z}^{T} \mathbf{z}_t \, dx & = \int_0^1 \eta \eta_t + \xi \xi_t \, dx && = \int_0^1 C_s \eta \eta_x - C_s \xi_x \, dx\\
+& = \int_0^1 \dfrac{\partial}{\partial t} \bigg ( \frac{\eta^2}{2} + \frac{\xi^2}{2} \bigg ) \, dx && = C_s \bigg [ \frac{\eta^2}{2} \bigg |_0^1 - \frac{\xi^2}{2} \bigg |_0^1  \bigg ]\\
+&= \frac{1}{2} \dfrac{\partial}{\partial t} \int_0^1 |\mathbf{z}|^2 \, dx && = \frac{C_s}{2} \bigg [\eta^2(1)-\eta^2(0) -\xi^2(1) + \xi^2(0) \bigg ]\\
+& = \frac{1}{2} \dfrac{\partial}{\partial t} \norm{\mathbf{z}}_2^2 && = \frac{C_s}{2} \bigg [ R_N^2 \xi^2(1) - \eta^2(0) - \xi^2(1) + R_0^2\eta^2(0) \bigg ]\\
+& = \frac{1}{2} \dfrac{\partial}{\partial t} \norm{\mathbf{z}}_2^2 && = \frac{C_s}{2} \bigg [\eta^2(0) \big (R_0^2 - 1 \big ) + \xi^2(1) \big ( R_N^2 - 1 \big )    \bigg ],
+\end{alignat*}
+where $|\cdot |$ denotes the Euclidean norm on $\mathbb{R}^2$ and $ \norm{\cdot}_2 $ is the $\mathcal{L}^2$-norm. 
+\end{flushleft}
+\end{document}
