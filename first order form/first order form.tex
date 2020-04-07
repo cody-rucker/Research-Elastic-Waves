@@ -34,13 +34,14 @@
 \begin{document}
 \begin{flushleft}
 
+
 Starting with the elastic wave equation in first order form on the domain $[0,1]$
 \begin{align*}
 \rho v_t &= \sigma_x\\
 \sigma_t &= \mu v_x \\
 \end{align*}
 
-we write 
+we write
 \begin{align*}
 \begin{bmatrix}
 v \\
@@ -54,7 +55,7 @@ v \\
 \end{bmatrix}_x.
 \end{align*}
 
-This may be diagonalized as 
+This may be diagonalized as
 \begin{align*}
 \begin{bmatrix}
 v \\
@@ -73,7 +74,7 @@ k & k \\
 \end{bmatrix}$, $\boldsymbol{\Lambda} = \begin{bmatrix}
 c_s & 0 \\
 0 & -c_s \\
-\end{bmatrix}$, for $c_s = \sqrt{\frac{\mu}{\rho}}$ the shear wave speed and $k = (\sqrt{\mu \rho } )^{-1}$. By defining the transformation 
+\end{bmatrix}$, for $c_s = \sqrt{\frac{\mu}{\rho}}$ the shear wave speed and $k = (\sqrt{\mu \rho } )^{-1}$. By defining the transformation
 \begin{align*}
 \mathbf{z} = \begin{bmatrix}
 z_1 \\
@@ -83,12 +84,12 @@ v \\
 \sigma \\
 \end{bmatrix}
 \end{align*}
-and multiplying by $\mathbf{P}^{-1}$ on the left we get the decoupled system 
+and multiplying by $\mathbf{P}^{-1}$ on the left we get the decoupled system
 \begin{align*}
 \mathbf{z}_t = \boldsymbol{\Lambda} \mathbf{z}_x.
 \end{align*}
 
-This decoupled system 
+This decoupled system
 \begin{align*}
 (z_1)_t - c_s (z_1)_x = 0 \\
 (z_2)_t + c_s (z_2)_x = 0\\
@@ -103,7 +104,7 @@ z_2(0,t) &= g_2  \quad t>0.\\
 \subsection*{Semidiscrete problem}
 
 \begin{align*}
-\mathbf{z}_t = (\boldsymbol{\Lambda} \otimes \boldsymbol{D}) \mathbf{z} + \boldsymbol{\Sigma} \mathbf{z} 
+\mathbf{z}_t = (\boldsymbol{\Lambda} \otimes \boldsymbol{D}) \mathbf{z} + \boldsymbol{\Sigma} \mathbf{z}
 \end{align*}
 where $\boldsymbol{\Lambda}$ $2 \times 2$ diagonal matrix of eigenvalues, $\boldsymbol{D}$ is a $N\times N$ SBP finite difference approximation to the first derivative. $z$ is a $2N\times 1$ vector consisting of $z_1$ stacked on top of $z_2$, that is
 $$\mathbf{z} = \begin{bmatrix}
@@ -120,7 +121,7 @@ z_{2N}\\
 Finally, take $\boldsymbol{H}$ to be the quadrature matrix associated with $\mathbf{D}$ and $\mathcal{H} = I_2 \otimes \boldsymbol{H}$. We proceed by multiplying $\mathbf{z}_t$ by $\mathbf{z}^{T}\mathcal{H}$ and adding the transpose:
 
 \begin{align*}
-\mathbf{z}^{T} \mathcal{H} \mathbf{z}_t + (\mathbf{z}^{T}\mathcal{H} \mathbf{z}_t)^{T} &= \mathbf{z}^{T}\mathcal{H} (\boldsymbol{\Lambda} \otimes \boldsymbol{D} ) \mathbf{z} + \mathbf{z}^{T} \mathcal{H} \boldsymbol{\Sigma} \boldsymbol{z} 
+\mathbf{z}^{T} \mathcal{H} \mathbf{z}_t + (\mathbf{z}^{T}\mathcal{H} \mathbf{z}_t)^{T} &= \mathbf{z}^{T}\mathcal{H} (\boldsymbol{\Lambda} \otimes \boldsymbol{D} ) \mathbf{z} + \mathbf{z}^{T} \mathcal{H} \boldsymbol{\Sigma} \boldsymbol{z}
 + \mathbf{z}^{T} (\boldsymbol{\Lambda} \otimes \boldsymbol{D} )^{T}\mathcal{H} \mathbf{z} + \mathbf{z}^{T} \boldsymbol{\Sigma}^{T}\mathcal{H} \boldsymbol{z}\\
 &=\mathbf{z}^{T} \big [( \boldsymbol{\Lambda} \otimes \boldsymbol{H D}) + (\boldsymbol{\Lambda} \otimes (\boldsymbol{HD})^{T}) \big ] \mathbf{z} + \mathbf{z}^{T} \big [ \mathcal{H}\boldsymbol{\Sigma} +(\mathcal{H}\boldsymbol{\Sigma})^{T} \big ] \mathbf{z}\\
 &= \mathbf{z}^{T} \big [ \boldsymbol{\Lambda} \otimes (\boldsymbol{Q} +\boldsymbol{Q}^{T}) \big ] \mathbf{z} + \mathbf{z}^{T} \big [ \mathcal{H}\boldsymbol{\Sigma} +(\mathcal{H}\boldsymbol{\Sigma})^{T} \big ] \mathbf{z}\\
@@ -128,7 +129,7 @@ Finally, take $\boldsymbol{H}$ to be the quadrature matrix associated with $\mat
 &= \lambda_1( z_{1N}^2 - z_{11}^2) + \lambda_2(z_{2N}^2 - z_{21}^2) + \mathbf{z}^{T} \big [ \mathcal{H}\boldsymbol{\Sigma} +(\mathcal{H}\boldsymbol{\Sigma})^{T} \big ] \mathbf{z}.
 \end{align*}
 
-Though I neglected to mention it earlier, the penalty matrix $\boldsymbol{\Sigma}$ is given by 
+Though I neglected to mention it earlier, the penalty matrix $\boldsymbol{\Sigma}$ is given by
 $$\boldsymbol{\Sigma} = \begin{bmatrix}
 \alpha_1 \boldsymbol{H}^{-1} \boldsymbol{E}_N & -\alpha_1 \boldsymbol{H}^{-1} R_N \boldsymbol{E}_N \\
 -\alpha_2 \boldsymbol{H}^{-1} R_0 \boldsymbol{E}_0 & \alpha_2\boldsymbol{H}^{-1} \boldsymbol{E}_0
@@ -149,14 +150,14 @@ and we compute
 \end{align*}
  Finally we have
 \begin{align*}
-\mathbf{z}^{T} \mathcal{H} \mathbf{z}_t + (\mathbf{z}^{T}\mathcal{H} \mathbf{z}_t)^{T} &=  \lambda_1 z_{1N}^2 - \lambda_1 z_{11}^2 + \lambda_2 z_{2N}^2 - \lambda_2 z_{21}^2 
+\mathbf{z}^{T} \mathcal{H} \mathbf{z}_t + (\mathbf{z}^{T}\mathcal{H} \mathbf{z}_t)^{T} &=  \lambda_1 z_{1N}^2 - \lambda_1 z_{11}^2 + \lambda_2 z_{2N}^2 - \lambda_2 z_{21}^2
 + 2\alpha_1 z_{1N}^2 + 2 \alpha_2 z_{21}^2\\
 & \quad - 2\alpha_2 R_0 z_{11}z_{21} - 2\alpha_1 R_N z_{1N}z_{2N}.
 \end{align*}
 
-To deal with the final two terms in the previous equation, we can use the fact that for $a,b \in \mathbb{R}$ 
+To deal with the final two terms in the previous equation, we can use the fact that for $a,b \in \mathbb{R}$
 $$2ab \leq a^2 + b^2,$$
-and in our case 
+and in our case
 \begin{align*}
 2 ( R_0 z_{11})(z_{21}) &\leq  R_0^2 z_{11}^2 +  z_{21}^2\\
 2 ( R_N z_{2N})(z_{1N}) &\leq  R_N^2 z_{2N}^2 + z_{1N}^2.
@@ -167,16 +168,16 @@ Now we employ the fact that $\alpha_1, \alpha_2 < 0$ and thus $-\alpha_1 > 0$ an
 \begin{align*}
 2(-\alpha_2) ( R_0 z_{11})(z_{21}) &\leq  -\alpha_2 R_0^2 z_{11}^2 -  \alpha_2 z_{21}^2\\
 2(-\alpha_1) ( R_N z_{2N})(z_{1N}) &\leq  -\alpha_1 R_N^2 z_{2N}^2 -\alpha_1  z_{1N}^2.
-\end{align*} 
+\end{align*}
 
 Returning to $\mathbf{z}^{T} \mathcal{H} \mathbf{z}_t + (\mathbf{z}^{T}\mathcal{H} \mathbf{z}_t)^{T}$ we can now write
 
 \begin{align*}
-\mathbf{z}^{T} \mathcal{H} \mathbf{z}_t + (\mathbf{z}^{T}\mathcal{H} \mathbf{z}_t)^{T} &=  \lambda_1 z_{1N}^2 - \lambda_1 z_{11}^2 + \lambda_2 z_{2N}^2 - \lambda_2 z_{21}^2 
+\mathbf{z}^{T} \mathcal{H} \mathbf{z}_t + (\mathbf{z}^{T}\mathcal{H} \mathbf{z}_t)^{T} &=  \lambda_1 z_{1N}^2 - \lambda_1 z_{11}^2 + \lambda_2 z_{2N}^2 - \lambda_2 z_{21}^2
 + 2\alpha_1 z_{1N}^2 + 2 \alpha_2 z_{21}^2\\
 & \quad - 2\alpha_2 R_0 z_{11}z_{21} - 2\alpha_1 R_N z_{1N}z_{2N}\\
 \vspace{0.25cm}\\
-&\leq \lambda_1 z_{1N}^2 - \lambda_1 z_{11}^2 + \lambda_2 z_{2N}^2 - \lambda_2 z_{21}^2 
+&\leq \lambda_1 z_{1N}^2 - \lambda_1 z_{11}^2 + \lambda_2 z_{2N}^2 - \lambda_2 z_{21}^2
 + 2\alpha_1 z_{1N}^2 + 2 \alpha_2 z_{21}^2\\
 & \quad -\alpha_2 R_0^2 z_{11}^2 -  \alpha_2 z_{21}^2 -\alpha_1 R_N^2 z_{2N}^2 -\alpha_1  z_{1N}^2\\
 \vspace{0.25cm}\\
@@ -195,7 +196,7 @@ From the first two terms we can gather that $\alpha_1 \leq -\lambda_1$ and $\alp
 \end{align*}
 
 \section*{Energy Method for the Continuous Problem}
-Consider the continuous form of the diagonalized system we derived from the first-order wave equation 
+Consider the continuous form of the diagonalized system we derived from the first-order wave equation
 
 \begin{align*}
 \eta_t &= C_s \eta_x  \\
@@ -217,6 +218,6 @@ Now let $\mathbf{z} = \begin{bmatrix}
 & = \frac{1}{2} \dfrac{\partial}{\partial t} \norm{\mathbf{z}}_2^2 && = \frac{C_s}{2} \bigg [ R_N^2 \xi^2(1) - \eta^2(0) - \xi^2(1) + R_0^2\eta^2(0) \bigg ]\\
 & = \frac{1}{2} \dfrac{\partial}{\partial t} \norm{\mathbf{z}}_2^2 && = \frac{C_s}{2} \bigg [\eta^2(0) \big (R_0^2 - 1 \big ) + \xi^2(1) \big ( R_N^2 - 1 \big )    \bigg ],
 \end{alignat*}
-where $|\cdot |$ denotes the Euclidean norm on $\mathbb{R}^2$ and $ \norm{\cdot}_2 $ is the $\mathcal{L}^2$-norm. 
+where $|\cdot |$ denotes the Euclidean norm on $\mathbb{R}^2$ and $ \norm{\cdot}_2 $ is the $\mathcal{L}^2$-norm.
 \end{flushleft}
 \end{document}
